@@ -8,10 +8,6 @@
 2. 对elastic做简单的crud模板封装，建造者模式EsCretiria传递参数，返回EsResult的详细返回值。
 
 
-#### 安装顺序
-
-1. cg-parent 首先Install
-2. 然后直接安装外层cg-frame下的pom
 
 #### 使用说明
 1. @EnableEs //使springboot开启Es的自动扫描配置支付
