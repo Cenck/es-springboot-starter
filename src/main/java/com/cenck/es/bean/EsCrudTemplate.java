@@ -52,21 +52,22 @@ public class EsCrudTemplate {
 
 	/**
 	 * @param list
+	 * @param index 索引
 	 * @param type
 	 * @throws UnknownHostException
 	 * @throws JsonProcessingException
 	 */
-	public void createIndex(List<? extends Entity> list, String type) throws IOException {
+	public void createIndex(List<? extends Entity> list, String index,String type) throws IOException {
 		Client client = esClient.getClient();
 		// 如果存在就先删除索引
 		if (client.admin()
 				.indices()
-				.prepareExists(esBootProp.getIndex())
+				.prepareExists(index)
 				.get()
 				.isExists()) {
 			client.admin()
 					.indices()
-					.prepareDelete(esBootProp.getIndex())
+					.prepareDelete(index)
 					.get();
 		}
 		// 创建索引,并设置mapping.
@@ -74,7 +75,7 @@ public class EsCrudTemplate {
 
 		client.admin()
 				.indices()
-				.prepareCreate(esBootProp.getIndex())
+				.prepareCreate(index)
 				.addMapping(type, mappingStr)
 				.get();
 
@@ -86,7 +87,7 @@ public class EsCrudTemplate {
 			json = JsonMapper.getMapper()
 					.getObjectMapper()
 					.writeValueAsBytes(o);
-			bulkRequest.add(new IndexRequest(esBootProp.getIndex(), type, o.getId() + "").source(json));
+			bulkRequest.add(new IndexRequest(index, type, o.getId() + "").source(json));
 		}
 
 		// 执行批量处理request
@@ -118,7 +119,7 @@ public class EsCrudTemplate {
 	public EsResult search(String type, EsFilterBean filter) throws JsonParseException, JsonMappingException, IOException {
 		Client client = esClient.getClient();
 
-		SearchRequestBuilder responsebuilder = client.prepareSearch(esBootProp.getIndex())
+		SearchRequestBuilder responsebuilder = client.prepareSearch(filter.index())
 				.setTypes(type);
 		responsebuilder.setExplain(true);
 		String fieldName;
@@ -165,7 +166,7 @@ public class EsCrudTemplate {
 	public EsResult searchDocHighlight(String type, EsFilterBean filter) throws JsonParseException, JsonMappingException, IOException {
 		Client client = esClient.getClient();
 
-		SearchRequestBuilder responsebuilder = client.prepareSearch(esBootProp.getIndex())
+		SearchRequestBuilder responsebuilder = client.prepareSearch(filter.index())
 				.setTypes(type);
 		// 跳过前from个文档
 		responsebuilder.setFrom(filter.from());

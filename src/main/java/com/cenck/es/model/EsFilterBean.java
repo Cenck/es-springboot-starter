@@ -14,6 +14,12 @@ public interface EsFilterBean {
 
 
 	/**
+	 * 索引(表)
+	 * @return
+	 */
+	String index();
+
+	/**
 	 * 获取查询字段
 	 * @return
 	 */

@@ -1,0 +1,6 @@
+spring:
+  elasticsearch:
+    host: 192.168.0.2
+    port: 9300
+    #集群名称
+    clusterName: server01

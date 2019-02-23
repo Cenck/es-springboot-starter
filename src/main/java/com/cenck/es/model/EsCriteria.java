@@ -21,6 +21,8 @@ public class EsCriteria implements EsFilterBean {
 
 	private int size;
 	private int from;
+	/**  索引   */
+	private String index;
 	/**  搜索关键字  */
 	private FilterNode should;
 	/**  搜索限制字段  */
@@ -29,6 +31,11 @@ public class EsCriteria implements EsFilterBean {
 
 	@Override
 	public void filter() {
+	}
+
+	@Override
+	public String index() {
+		return index;
 	}
 
 	@Override

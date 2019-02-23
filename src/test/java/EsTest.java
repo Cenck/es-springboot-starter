@@ -28,13 +28,14 @@ public class EsTest {
 		list.add(new Goods(1,"苹果",new BigDecimal(4.5)));
 		list.add(new Goods(2,"手机",new BigDecimal(1699)));
 		try {
-			template.createIndex(list,"goods");
+			template.createIndex(list,"goods","test");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			EsResult esResult = template.search("goods", EsCriteria.builder()
+			EsResult esResult = template.search("test", EsCriteria.builder()
+					.index("goods")
 					.should(new FilterNode("name","苹果")).build());
 			System.out.println("本次查询到"+esResult.getSize()+"条数据");
 		} catch (IOException e) {
