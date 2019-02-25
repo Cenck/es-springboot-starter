@@ -25,8 +25,8 @@ public class EsTest {
 
 	public void Test(){
 		List<Goods> list = new ArrayList<>(2);
-		list.add(new Goods(1,"苹果",new BigDecimal(4.5)));
-		list.add(new Goods(2,"手机",new BigDecimal(1699)));
+		list.add(new Goods(1l,"苹果",new BigDecimal(4.5)));
+		list.add(new Goods(2l,"手机",new BigDecimal(1699)));
 		try {
 			template.createIndex(list,"goods","test");
 		} catch (IOException e) {
@@ -48,7 +48,7 @@ public class EsTest {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class Goods implements Entity {
-		private long id;
+		private Long id;
 		private String name;
 		private BigDecimal price;
 	}
